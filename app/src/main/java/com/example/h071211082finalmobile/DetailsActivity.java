@@ -63,6 +63,12 @@ public class DetailsActivity extends AppCompatActivity {
                 }
             }
         });
+        binding.ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         // Check if the movie or TV show is already in favorites
         checkIfFavorite();
