@@ -1,5 +1,8 @@
 package com.example.h071211082finalmobile.Fragment;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,8 +30,8 @@ import retrofit2.Response;
 public class TvShowFragment extends Fragment {
 
     private FragmentTvShowBinding binding;
-
     private TvAdapter tvAdapter;
+    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,26 +47,40 @@ public class TvShowFragment extends Fragment {
         binding.rvTv.setHasFixedSize(true);
         binding.rvTv.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
+        progressBar = getActivity().findViewById(R.id.progresbar);
+
+        if (isNetworkConnected()) {
+            loadData();
+        } else {
+            progressBar.setVisibility(View.GONE);
+        }
+    }
+
+    private void loadData() {
         ApiConfig.getApiService().getListTv().enqueue(new Callback<TvResponse>() {
             @Override
             public void onResponse(Call<TvResponse> call, Response<TvResponse> response) {
-                if (response.isSuccessful()){
-                    if (response.body() != null){
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
                         List<TvModel> tvModels = response.body().getTvModels();
                         tvAdapter = new TvAdapter(tvModels);
                         binding.rvTv.setAdapter(tvAdapter);
-
-                        ProgressBar progressBar = getActivity().findViewById(R.id.progresbar);
-                        progressBar.setVisibility(View.GONE);
-
                     }
                 }
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<TvResponse> call, Throwable t) {
-
+                progressBar.setVisibility(View.GONE);
             }
         });
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 }
