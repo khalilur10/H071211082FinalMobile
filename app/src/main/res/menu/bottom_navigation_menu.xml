@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_movies"
+        android:icon="@drawable/baseline_movie_filter_24"
+        android:title="Movies" />
+    <item
+        android:id="@+id/action_tv_shows"
+        android:icon="@drawable/baseline_live_tv_24"
+        android:title="TV Shows" />
+    <item
+        android:id="@+id/action_favorites"
+        android:icon="@drawable/baseline_favorite_24"
+        android:title="Favorites" />
+</menu>
