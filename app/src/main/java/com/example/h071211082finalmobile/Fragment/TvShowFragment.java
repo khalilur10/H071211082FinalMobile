@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +15,7 @@ import com.example.h071211082finalmobile.Adapter.TvAdapter;
 import com.example.h071211082finalmobile.Model.TvModel;
 import com.example.h071211082finalmobile.Model.TvResponse;
 import com.example.h071211082finalmobile.Networking.ApiConfig;
+import com.example.h071211082finalmobile.R;
 import com.example.h071211082finalmobile.databinding.FragmentTvShowBinding;
 
 import java.util.List;
@@ -50,6 +52,9 @@ public class TvShowFragment extends Fragment {
                         List<TvModel> tvModels = response.body().getTvModels();
                         tvAdapter = new TvAdapter(tvModels);
                         binding.rvTv.setAdapter(tvAdapter);
+
+                        ProgressBar progressBar = getActivity().findViewById(R.id.progresbar);
+                        progressBar.setVisibility(View.GONE);
 
                     }
                 }

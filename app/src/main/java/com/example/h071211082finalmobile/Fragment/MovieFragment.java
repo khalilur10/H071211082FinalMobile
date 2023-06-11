@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +16,7 @@ import com.example.h071211082finalmobile.Adapter.MovieAdapter;
 import com.example.h071211082finalmobile.Model.MovieModel;
 import com.example.h071211082finalmobile.Model.MovieResponse;
 import com.example.h071211082finalmobile.Networking.ApiConfig;
+import com.example.h071211082finalmobile.R;
 import com.example.h071211082finalmobile.databinding.FragmentMovieBinding;
 
 import java.util.List;
@@ -49,10 +51,11 @@ public class MovieFragment extends Fragment {
                     if(response.body() != null){
                         List<MovieModel> movieModel = response.body().getMovieModels();
                         for (int i = 0; i < movieModel.size(); i++) {
-                            Log.d("apakah", movieModel.get(i).getOriginal_title());
                         }
                         movieAdapter = new MovieAdapter(movieModel);
                         binding.rvMovie.setAdapter(movieAdapter);
+                        ProgressBar progressBar = getActivity().findViewById(R.id.progresbar);
+                        progressBar.setVisibility(View.GONE);
 
                     }
                 }

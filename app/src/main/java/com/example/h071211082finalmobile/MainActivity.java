@@ -2,6 +2,8 @@ package com.example.h071211082finalmobile;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,9 +19,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private FragmentManager fragmentManager;
-    MovieFragment moviesFragment = new MovieFragment();
-    TvShowFragment tvShowsFragment = new TvShowFragment();
-    FavoritesFragment favoritesFragment = new FavoritesFragment();
+    private MovieFragment moviesFragment = new MovieFragment();
+    private TvShowFragment tvShowsFragment = new TvShowFragment();
+    private FavoritesFragment favoritesFragment = new FavoritesFragment();
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         fragmentManager = getSupportFragmentManager();
+        progressBar = binding.progresbar;
 
         Fragment fragment = fragmentManager.findFragmentByTag(MovieFragment.class.getSimpleName());
 
@@ -43,14 +47,17 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_movies:
+                        showProgressBar();
                         fragmentManager.beginTransaction().replace(R.id.frame_container, moviesFragment).commit();
                         binding.toolbarTitle.setText("Movies");
                         return true;
                     case R.id.action_tv_shows:
+                        showProgressBar();
                         fragmentManager.beginTransaction().replace(R.id.frame_container, tvShowsFragment).commit();
                         binding.toolbarTitle.setText("TV Shows");
                         return true;
                     case R.id.action_favorites:
+                        showProgressBar();
                         fragmentManager.beginTransaction().replace(R.id.frame_container, favoritesFragment).commit();
                         binding.toolbarTitle.setText("Favorites");
                         return true;
@@ -58,5 +65,13 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void showProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
     }
 }
